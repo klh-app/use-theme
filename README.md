@@ -19,7 +19,7 @@ Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime de
 - **System preference detection** — reacts to OS-level `prefers-color-scheme` changes in real-time
 - **Cross-tab sync** — theme changes propagate across browser tabs automatically
 - **FOUC prevention** — inline script sets theme before first paint
-- **Pluggable storage** — `ThemeStorage` interface for localStorage, cookies, IndexedDB, or anything
+- **Pluggable storage** — `ThemeStorage` interface for localStorage, cookies, or any sync backend
 - **Tailwind-ready** — `attribute="class"` just works with `darkMode: "class"`
 - **SSR safe** — all DOM/`window` access is guarded, `getServerSnapshot` provided
 - **Zero runtime dependencies** — only `react >= 18` as peer dep
@@ -144,6 +144,7 @@ Wrap your app. All `useTheme` calls must be descendants.
 | `attribute` | `string \| string[]` | `"data-theme"` | HTML attribute(s) set on `<html>` |
 | `value` | `Record<string, string>` | — | Maps theme names to attribute values |
 | `enableSystem` | `boolean` | `true` | Resolve `"system"` to OS preference |
+| `enableColorScheme` | `boolean` | `true` | Set `color-scheme` style on `<html>` for native UI elements |
 | `disableTransitionOnChange` | `boolean` | `false` | Suppress CSS transitions during theme switch |
 | `nonce` | `string` | — | CSP nonce for injected `<style>` tags |
 
@@ -230,13 +231,24 @@ const cookieStorage: ThemeStorage = {
 
 ## Tailwind CSS
 
-Use the `class` attribute with Tailwind's `darkMode: "class"`:
+Set `attribute="class"` so the provider adds `class="dark"` to `<html>`:
 
 ```tsx
 <ThemeProvider attribute="class">...</ThemeProvider>
 ```
 
-This sets `<html class="dark">` which Tailwind's `dark:` variants key off of.
+Tailwind v4 uses CSS-based configuration — add a custom variant:
+
+```css
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+Tailwind v3 uses `tailwind.config.js`:
+
+```js
+module.exports = { darkMode: "class" };
+```
 
 ## Custom themes
 
@@ -288,10 +300,10 @@ Injects a temporary `<style>` with `transition: none !important` on all elements
 
 ```
 ┌─────────────────────┐
-│    ThemeProvider     │
+│    ThemeProvider    │
 │                     │
 │  useSyncExternalStore(storage)  ← single source of truth
-│  useSystemTheme()               ← matchMedia subscription
+│  useSystemTheme()   |           ← matchMedia subscription
 │  useEffect → applyTheme(DOM)    ← post-hydration side effect
 │                     │
 │  React Context      │
