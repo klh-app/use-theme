@@ -1,21 +1,23 @@
 import { useSyncExternalStore } from "react";
 import { MEDIA_QUERY } from "./constants.js";
 
-function matchMediaSupported(): boolean {
-  return typeof window !== "undefined" && typeof window.matchMedia === "function";
+function getMediaQuery(): MediaQueryList | null {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return null;
+  }
+  return window.matchMedia(MEDIA_QUERY);
 }
 
 function subscribeToSystemTheme(callback: () => void): () => void {
-  if (!matchMediaSupported()) return () => {};
+  const mql = getMediaQuery();
+  if (!mql) return () => {};
 
-  const mediaQuery = window.matchMedia(MEDIA_QUERY);
-  mediaQuery.addEventListener("change", callback);
-  return () => mediaQuery.removeEventListener("change", callback);
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
 }
 
 function getSystemThemeSnapshot(): "light" | "dark" {
-  if (!matchMediaSupported()) return "light";
-  return window.matchMedia(MEDIA_QUERY).matches ? "dark" : "light";
+  return getMediaQuery()?.matches ? "dark" : "light";
 }
 
 function getServerSnapshot(): undefined {

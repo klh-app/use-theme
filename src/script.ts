@@ -1,9 +1,9 @@
 import { createElement, type ReactElement } from "react";
 import {
   DEFAULT_ATTRIBUTE,
-  DEFAULT_THEME,
   MEDIA_QUERY,
   STORAGE_KEY,
+  SYSTEM_THEME,
 } from "./constants.js";
 
 export interface ThemeScriptProps {
@@ -24,7 +24,7 @@ export interface ThemeScriptProps {
 export function getThemeScript(props?: ThemeScriptProps): string {
   const {
     storageKey = STORAGE_KEY,
-    defaultTheme = DEFAULT_THEME,
+    defaultTheme = SYSTEM_THEME,
     attribute = DEFAULT_ATTRIBUTE,
     value,
     enableSystem = true,

@@ -1,14 +1,10 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/klh-app/use-theme/main/assets/logo.png" width="120" alt="use-theme logo" />
-</p>
+# @klh-app/use-theme
 
-<h1 align="center">@klh-app/use-theme</h1>
+![use-theme logo](https://raw.githubusercontent.com/klh-app/use-theme/main/assets/logo.png)
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@klh-app/use-theme"><img src="https://img.shields.io/npm/v/@klh-app/use-theme?color=blue" alt="npm version" /></a>
-  <a href="https://www.npmjs.com/package/@klh-app/use-theme"><img src="https://img.shields.io/npm/dm/@klh-app/use-theme" alt="npm downloads" /></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@klh-app/use-theme" alt="license" /></a>
-</p>
+[![npm version](https://img.shields.io/npm/v/@klh-app/use-theme?color=blue)](https://www.npmjs.com/package/@klh-app/use-theme)
+[![npm downloads](https://img.shields.io/npm/dm/@klh-app/use-theme)](https://www.npmjs.com/package/@klh-app/use-theme)
+[![license](https://img.shields.io/npm/l/@klh-app/use-theme)](./LICENSE)
 
 Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime dependencies, framework-agnostic, works with Next.js, Vite, Remix, or any React 18+ setup.
 
@@ -59,7 +55,7 @@ function ThemeToggle() {
 ## Why this over next-themes?
 
 | | `@klh-app/use-theme` | `next-themes` |
-|---|---|---|
+| --- | --- | --- |
 | **State primitive** | `useSyncExternalStore` — tear-free reads, no hydration mismatch | `useState` + `useEffect` — can flash wrong theme during concurrent renders |
 | **Framework** | Any React 18+ app (Vite, Remix, Astro, Next.js) | Next.js-first, others require workarounds |
 | **Storage** | Pluggable `ThemeStorage` interface — swap localStorage for cookies, IndexedDB, or anything | Hardcoded to localStorage |
@@ -136,7 +132,7 @@ Wrap your app. All `useTheme` calls must be descendants.
 ```
 
 | Prop | Type | Default | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `defaultTheme` | `string` | `"system"` | Initial theme when nothing is persisted |
 | `themes` | `string[]` | `["light", "dark"]` | Available theme values |
 | `storageKey` | `string` | `"theme"` | localStorage key |
@@ -155,7 +151,7 @@ const { theme, resolvedTheme, setTheme, systemTheme, themes } = useTheme();
 ```
 
 | Return | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `theme` | `string` | The user's stored choice (`"light"`, `"dark"`, `"system"`, or custom) |
 | `resolvedTheme` | `string` | The actual applied theme after resolving `"system"` |
 | `setTheme` | `(theme: string \| (prev: string) => string) => void` | Set a new theme (value or updater function) |
@@ -298,7 +294,7 @@ Injects a temporary `<style>` with `transition: none !important` on all elements
 
 ## Architecture
 
-```
+```txt
 ┌─────────────────────┐
 │    ThemeProvider    │
 │                     │
