@@ -1,23 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { createLocalStorageAdapter } from "../storage.js";
+import { createMockLocalStorage } from "./helpers.js";
 
 describe("createLocalStorageAdapter", () => {
   let mockStorage: Record<string, string>;
 
   beforeEach(() => {
-    mockStorage = {};
-    vi.stubGlobal(
-      "localStorage",
-      {
-        getItem: vi.fn((key: string) => mockStorage[key] ?? null),
-        setItem: vi.fn((key: string, value: string) => {
-          mockStorage[key] = value;
-        }),
-        removeItem: vi.fn((key: string) => {
-          delete mockStorage[key];
-        }),
-      },
-    );
+    mockStorage = createMockLocalStorage();
   });
 
   afterEach(() => {

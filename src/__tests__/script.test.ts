@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { getThemeScript } from "../script.js";
+import { createMockLocalStorage, createMockMatchMedia, cleanupDOM } from "./helpers.js";
 
 describe("getThemeScript", () => {
   it("returns a non-empty string", () => {
@@ -79,26 +80,14 @@ describe("getThemeScript", () => {
     let mockStorage: Record<string, string>;
 
     beforeEach(() => {
-      mockStorage = {};
-      vi.stubGlobal("localStorage", {
-        getItem: vi.fn((key: string) => mockStorage[key] ?? null),
-        setItem: vi.fn((key: string, value: string) => {
-          mockStorage[key] = value;
-        }),
-      });
-      // Default: light preference
-      vi.stubGlobal(
-        "matchMedia",
-        vi.fn(() => ({ matches: false })),
-      );
-      document.documentElement.removeAttribute("data-theme");
+      mockStorage = createMockLocalStorage();
+      createMockMatchMedia();
+      cleanupDOM();
     });
 
     afterEach(() => {
       vi.unstubAllGlobals();
-      document.documentElement.removeAttribute("data-theme");
-      document.documentElement.removeAttribute("data-mode");
-      document.documentElement.className = "";
+      cleanupDOM();
     });
 
     it("sets data-theme from stored value", () => {
@@ -120,10 +109,7 @@ describe("getThemeScript", () => {
     });
 
     it("resolves system theme to dark when OS prefers dark", () => {
-      vi.stubGlobal(
-        "matchMedia",
-        vi.fn(() => ({ matches: true })),
-      );
+      createMockMatchMedia(true);
 
       const script = getThemeScript({ defaultTheme: "system" });
 
@@ -133,10 +119,7 @@ describe("getThemeScript", () => {
     });
 
     it("resolves system theme to light when OS prefers light", () => {
-      vi.stubGlobal(
-        "matchMedia",
-        vi.fn(() => ({ matches: false })),
-      );
+      createMockMatchMedia(false);
 
       const script = getThemeScript({ defaultTheme: "system" });
 

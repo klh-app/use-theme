@@ -3,6 +3,7 @@ import { renderHook, act } from "@testing-library/react";
 import { createElement, type ReactNode } from "react";
 import { ThemeProvider } from "../provider.js";
 import { useTheme } from "../use-theme.js";
+import { createMockLocalStorage, createMockMatchMedia, cleanupDOM } from "./helpers.js";
 
 function createWrapper(props: Record<string, unknown> = {}) {
   return function Wrapper({ children }: { children: ReactNode }) {
@@ -14,42 +15,14 @@ describe("useTheme", () => {
   let mockStorage: Record<string, string>;
 
   beforeEach(() => {
-    mockStorage = {};
-    vi.stubGlobal("localStorage", {
-      getItem: vi.fn((key: string) => mockStorage[key] ?? null),
-      setItem: vi.fn((key: string, value: string) => {
-        mockStorage[key] = value;
-      }),
-      removeItem: vi.fn((key: string) => {
-        delete mockStorage[key];
-      }),
-    });
-
-    // Mock matchMedia for system theme
-    vi.stubGlobal(
-      "matchMedia",
-      vi.fn((query: string) => ({
-        matches: query === "(prefers-color-scheme: dark)" ? false : false,
-        media: query,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        onchange: null,
-        dispatchEvent: vi.fn(),
-      })),
-    );
-
-    // Clear any existing attributes
-    document.documentElement.removeAttribute("data-theme");
-    document.documentElement.className = "";
+    mockStorage = createMockLocalStorage();
+    createMockMatchMedia();
+    cleanupDOM();
   });
 
   afterEach(() => {
     vi.unstubAllGlobals();
-    document.documentElement.removeAttribute("data-theme");
-    document.documentElement.removeAttribute("data-mode");
-    document.documentElement.className = "";
+    cleanupDOM();
   });
 
   it("throws when used outside ThemeProvider", () => {
@@ -76,19 +49,7 @@ describe("useTheme", () => {
   });
 
   it("resolves system theme to dark when OS prefers dark", () => {
-    vi.stubGlobal(
-      "matchMedia",
-      vi.fn((query: string) => ({
-        matches: query === "(prefers-color-scheme: dark)",
-        media: query,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        onchange: null,
-        dispatchEvent: vi.fn(),
-      })),
-    );
+    createMockMatchMedia(true);
 
     const { result } = renderHook(() => useTheme(), {
       wrapper: createWrapper(),

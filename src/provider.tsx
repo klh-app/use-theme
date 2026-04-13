@@ -35,13 +35,20 @@ export function ThemeProvider({
     [storageProp, storageKey],
   );
 
-  // Subscribe to storage changes via useSyncExternalStore.
-  // The storage adapter handles both same-tab and cross-tab notifications
-  // internally, so no custom event wiring is needed here.
+  const getSnapshot = useCallback(
+    () => storage.get() ?? defaultTheme,
+    [storage, defaultTheme],
+  );
+
+  const getServerSnapshot = useCallback(
+    () => defaultTheme,
+    [defaultTheme],
+  );
+
   const theme = useSyncExternalStore(
     storage.subscribe,
-    () => storage.get() ?? defaultTheme,
-    () => defaultTheme,
+    getSnapshot,
+    getServerSnapshot,
   );
 
   const systemTheme = useSystemTheme();
