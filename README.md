@@ -200,6 +200,48 @@ import { createLocalStorageAdapter } from "@klh-app/use-theme";
 const storage = createLocalStorageAdapter("my-app-theme");
 ```
 
+## Cookie storage
+
+Built-in cookie adapter — useful when the server needs to read the theme (e.g. Next.js App Router) to render the correct HTML without a FOUC script:
+
+```tsx
+import { ThemeProvider, createCookieStorageAdapter } from "@klh-app/use-theme";
+
+const cookieStorage = createCookieStorageAdapter();
+
+<ThemeProvider storage={cookieStorage}>...</ThemeProvider>
+```
+
+With Next.js App Router, the server can read the cookie and set the theme before React hydrates:
+
+```tsx
+// app/layout.tsx
+import { cookies } from "next/headers";
+
+export default async function RootLayout({ children }) {
+  const theme = (await cookies()).get("theme")?.value ?? "system";
+  return (
+    <html lang="en" data-theme={theme} suppressHydrationWarning>
+      <body>
+        <CookieThemeProvider>{children}</CookieThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### `createCookieStorageAdapter(options?)`
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `key` | `string` | `"theme"` | Cookie name |
+| `path` | `string` | `"/"` | Cookie path |
+| `maxAge` | `number` | `31536000` (1 year) | Max-age in seconds |
+| `sameSite` | `"Strict" \| "Lax" \| "None"` | `"Lax"` | SameSite attribute |
+| `secure` | `boolean` | `false` | Secure flag (required when sameSite is `"None"`) |
+
+Cross-tab sync uses `BroadcastChannel` where available.
+
 ## Custom storage
 
 Implement the `ThemeStorage` interface to use any backend:
@@ -207,22 +249,23 @@ Implement the `ThemeStorage` interface to use any backend:
 ```ts
 import type { ThemeStorage } from "@klh-app/use-theme";
 
-const cookieStorage: ThemeStorage = {
+const sessionStorage: ThemeStorage = {
   get() {
-    return document.cookie.match(/theme=(\w+)/)?.[1] ?? null;
+    return window.sessionStorage.getItem("theme");
   },
   set(theme) {
-    document.cookie = `theme=${theme};path=/;max-age=31536000`;
+    window.sessionStorage.setItem("theme", theme);
   },
   subscribe(callback) {
-    // The subscribe contract: call `callback` whenever the value may have
-    // changed. For cookies you could poll, use a BroadcastChannel, etc.
-    const id = setInterval(callback, 1000);
-    return () => clearInterval(id);
+    const handler = (e: StorageEvent) => {
+      if (e.key === "theme") callback();
+    };
+    window.addEventListener("storage", handler);
+    return () => window.removeEventListener("storage", handler);
   },
 };
 
-<ThemeProvider storage={cookieStorage}>...</ThemeProvider>
+<ThemeProvider storage={sessionStorage}>...</ThemeProvider>
 ```
 
 ## Tailwind CSS

@@ -10,6 +10,8 @@ export { getThemeScript, ThemeScript } from "./script.js";
 
 // Storage
 export { createLocalStorageAdapter } from "./storage.js";
+export { createCookieStorageAdapter } from "./cookie-storage.js";
+export type { CookieStorageOptions } from "./cookie-storage.js";
 
 // Types
 export type {
