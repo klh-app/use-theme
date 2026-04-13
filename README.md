@@ -1,10 +1,14 @@
-# @klh-app/use-theme
+<p align="center">
+  <img src="https://raw.githubusercontent.com/klh-app/use-theme/main/assets/logo.png" width="120" alt="use-theme logo" />
+</p>
 
-![use-theme logo](https://raw.githubusercontent.com/klh-app/use-theme/main/assets/logo.png)
+<h1 align="center">@klh-app/use-theme</h1>
 
-[![npm version](https://img.shields.io/npm/v/@klh-app/use-theme?color=blue)](https://www.npmjs.com/package/@klh-app/use-theme)
-[![npm downloads](https://img.shields.io/npm/dm/@klh-app/use-theme)](https://www.npmjs.com/package/@klh-app/use-theme)
-[![license](https://img.shields.io/npm/l/@klh-app/use-theme)](./LICENSE)
+<p align="center">
+  <a href="https://www.npmjs.com/package/@klh-app/use-theme"><img src="https://img.shields.io/npm/v/@klh-app/use-theme?color=blue" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/@klh-app/use-theme"><img src="https://img.shields.io/npm/dm/@klh-app/use-theme" alt="npm downloads" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@klh-app/use-theme" alt="license" /></a>
+</p>
 
 Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime dependencies, framework-agnostic, works with Next.js, Vite, Remix, or any React 18+ setup.
 
