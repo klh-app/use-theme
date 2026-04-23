@@ -9,6 +9,10 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react-version: [18, 19]
+    name: CI (React ${{ matrix.react-version }})
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +24,11 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Override to React ${{ matrix.react-version }}
+        if: matrix.react-version == 19
+        run: pnpm add -D react@^19 react-dom@^19 @types/react@^19 @types/react-dom@^19
+
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test:coverage
