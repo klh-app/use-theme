@@ -91,7 +91,7 @@ describe("getThemeScript", () => {
     });
 
     it("sets data-theme from stored value", () => {
-      mockStorage["theme"] = "dark";
+      mockStorage.theme = "dark";
       const script = getThemeScript();
 
       // eslint-disable-next-line no-eval
@@ -129,20 +129,18 @@ describe("getThemeScript", () => {
     });
 
     it("applies value mapping", () => {
-      mockStorage["theme"] = "dark";
+      mockStorage.theme = "dark";
       const script = getThemeScript({
         value: { dark: "theme-dark", light: "theme-light" },
       });
 
       eval(script);
 
-      expect(document.documentElement.getAttribute("data-theme")).toBe(
-        "theme-dark",
-      );
+      expect(document.documentElement.getAttribute("data-theme")).toBe("theme-dark");
     });
 
     it("sets class attribute instead of data attribute", () => {
-      mockStorage["theme"] = "dark";
+      mockStorage.theme = "dark";
       const script = getThemeScript({ attribute: "class" });
 
       eval(script);
@@ -151,7 +149,7 @@ describe("getThemeScript", () => {
     });
 
     it("sets multiple attributes", () => {
-      mockStorage["theme"] = "dark";
+      mockStorage.theme = "dark";
       const script = getThemeScript({
         attribute: ["data-theme", "data-mode"],
       });

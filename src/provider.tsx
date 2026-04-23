@@ -1,16 +1,6 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 import type { ThemeContextValue, ThemeProviderProps } from "./types.js";
-import {
-  DEFAULT_ATTRIBUTE,
-  DEFAULT_THEMES,
-  STORAGE_KEY,
-  SYSTEM_THEME,
-} from "./constants.js";
+import { DEFAULT_ATTRIBUTE, DEFAULT_THEMES, STORAGE_KEY, SYSTEM_THEME } from "./constants.js";
 import { ThemeContext } from "./context.js";
 import { applyTheme, disableTransitions } from "./dom.js";
 import { createLocalStorageAdapter } from "./storage.js";
@@ -35,21 +25,11 @@ export function ThemeProvider({
     [storageProp, storageKey],
   );
 
-  const getSnapshot = useCallback(
-    () => storage.get() ?? defaultTheme,
-    [storage, defaultTheme],
-  );
+  const getSnapshot = useCallback(() => storage.get() ?? defaultTheme, [storage, defaultTheme]);
 
-  const getServerSnapshot = useCallback(
-    () => defaultTheme,
-    [defaultTheme],
-  );
+  const getServerSnapshot = useCallback(() => defaultTheme, [defaultTheme]);
 
-  const theme = useSyncExternalStore(
-    storage.subscribe,
-    getSnapshot,
-    getServerSnapshot,
-  );
+  const theme = useSyncExternalStore(storage.subscribe, getSnapshot, getServerSnapshot);
 
   const systemTheme = useSystemTheme();
 
@@ -84,9 +64,7 @@ export function ThemeProvider({
 
   // Apply theme to DOM
   useEffect(() => {
-    const restore = disableTransitionOnChange
-      ? disableTransitions(nonce)
-      : undefined;
+    const restore = disableTransitionOnChange ? disableTransitions(nonce) : undefined;
 
     applyTheme(resolvedTheme, attribute, value, allThemes, enableColorScheme);
 
@@ -94,7 +72,15 @@ export function ThemeProvider({
     // The double-rAF inside restore() ensures the browser has painted
     // with the new theme before transitions come back.
     restore?.();
-  }, [resolvedTheme, attribute, value, disableTransitionOnChange, nonce, allThemes, enableColorScheme]);
+  }, [
+    resolvedTheme,
+    attribute,
+    value,
+    disableTransitionOnChange,
+    nonce,
+    allThemes,
+    enableColorScheme,
+  ]);
 
   const contextValue = useMemo<ThemeContextValue>(
     () => ({
@@ -129,7 +115,5 @@ export function ThemeProvider({
     ],
   );
 
-  return (
-    <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 }

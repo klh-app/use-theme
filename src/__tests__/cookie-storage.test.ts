@@ -11,7 +11,7 @@ describe("createCookieStorageAdapter", () => {
       set: vi.fn((value: string) => {
         // Simple cookie jar: parse name=value and store/replace
         const name = value.split("=")[0];
-        const parts = cookieJar.split("; ").filter((c) => c && !c.startsWith(name + "="));
+        const parts = cookieJar.split("; ").filter((c) => c && !c.startsWith(`${name}=`));
         parts.push(value.split(";")[0]);
         cookieJar = parts.join("; ");
       }),
@@ -72,9 +72,7 @@ describe("createCookieStorageAdapter", () => {
       const adapter = createCookieStorageAdapter({ path: "/app" });
       adapter.set("dark");
 
-      expect(setter).toHaveBeenCalledWith(
-        expect.stringContaining("path=/app"),
-      );
+      expect(setter).toHaveBeenCalledWith(expect.stringContaining("path=/app"));
     });
 
     it("includes max-age", () => {
@@ -88,9 +86,7 @@ describe("createCookieStorageAdapter", () => {
       const adapter = createCookieStorageAdapter({ maxAge: 3600 });
       adapter.set("dark");
 
-      expect(setter).toHaveBeenCalledWith(
-        expect.stringContaining("max-age=3600"),
-      );
+      expect(setter).toHaveBeenCalledWith(expect.stringContaining("max-age=3600"));
     });
 
     it("includes SameSite", () => {
@@ -104,9 +100,7 @@ describe("createCookieStorageAdapter", () => {
       const adapter = createCookieStorageAdapter({ sameSite: "Strict" });
       adapter.set("dark");
 
-      expect(setter).toHaveBeenCalledWith(
-        expect.stringContaining("SameSite=Strict"),
-      );
+      expect(setter).toHaveBeenCalledWith(expect.stringContaining("SameSite=Strict"));
     });
 
     it("includes Secure flag when enabled", () => {
@@ -120,9 +114,7 @@ describe("createCookieStorageAdapter", () => {
       const adapter = createCookieStorageAdapter({ secure: true });
       adapter.set("dark");
 
-      expect(setter).toHaveBeenCalledWith(
-        expect.stringContaining("Secure"),
-      );
+      expect(setter).toHaveBeenCalledWith(expect.stringContaining("Secure"));
     });
 
     it("notifies same-tab subscribers", () => {

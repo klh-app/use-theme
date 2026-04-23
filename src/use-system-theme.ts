@@ -31,9 +31,5 @@ function getServerSnapshot(): undefined {
  * @returns 'dark' | 'light' | undefined (undefined on server)
  */
 export function useSystemTheme(): "light" | "dark" | undefined {
-  return useSyncExternalStore(
-    subscribeToSystemTheme,
-    getSystemThemeSnapshot,
-    getServerSnapshot,
-  );
+  return useSyncExternalStore(subscribeToSystemTheme, getSystemThemeSnapshot, getServerSnapshot);
 }

@@ -1,5 +1,4 @@
-const disableTransitionStyle =
-  "*, *::before, *::after { transition: none !important; }";
+const disableTransitionStyle = "*, *::before, *::after { transition: none !important; }";
 
 export function disableTransitions(nonce?: string): () => void {
   if (typeof document === "undefined") return () => {};

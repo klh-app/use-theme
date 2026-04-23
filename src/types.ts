@@ -46,6 +46,7 @@ export interface UseThemeReturn<T extends string = "light" | "dark" | "system"> 
   themes: T[] | (string & {})[];
 }
 
+/** @internal Not part of the public API — may change without notice. */
 export interface ThemeContextValue {
   theme: string;
   resolvedTheme: string;
