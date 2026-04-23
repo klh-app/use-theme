@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2](https://github.com/klh-app/use-theme/compare/v1.1.1...v1.1.2) (2026-04-23)
+
+
+### Bug Fixes
+
+* correct bundle size claims and document React 19 support ([#13](https://github.com/klh-app/use-theme/issues/13)) ([4ed373d](https://github.com/klh-app/use-theme/commit/4ed373d6c1c2c2b85bf240676f8d91ada3b4d60f))
+
 ## [1.1.1](https://github.com/klh-app/use-theme/compare/v1.1.0...v1.1.1) (2026-04-23)
 
 
