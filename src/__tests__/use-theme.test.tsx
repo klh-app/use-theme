@@ -123,7 +123,7 @@ describe("useTheme", () => {
   });
 
   it("reads persisted theme from storage on mount", () => {
-    mockStorage["theme"] = "dark";
+    mockStorage.theme = "dark";
 
     const { result } = renderHook(() => useTheme(), {
       wrapper: createWrapper(),
@@ -157,9 +157,7 @@ describe("useTheme", () => {
       }),
     });
 
-    expect(document.documentElement.getAttribute("data-theme")).toBe(
-      "theme-dark",
-    );
+    expect(document.documentElement.getAttribute("data-theme")).toBe("theme-dark");
   });
 
   it("returns systemTheme", () => {

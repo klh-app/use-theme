@@ -20,7 +20,7 @@ describe("createLocalStorageAdapter", () => {
     });
 
     it("returns the stored value", () => {
-      mockStorage["theme"] = "dark";
+      mockStorage.theme = "dark";
       const adapter = createLocalStorageAdapter("theme");
       expect(adapter.get()).toBe("dark");
     });
@@ -103,9 +103,7 @@ describe("createLocalStorageAdapter", () => {
 
       adapter.subscribe(callback);
 
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "theme" }),
-      );
+      window.dispatchEvent(new StorageEvent("storage", { key: "theme" }));
 
       expect(callback).toHaveBeenCalledOnce();
     });
@@ -116,9 +114,7 @@ describe("createLocalStorageAdapter", () => {
 
       adapter.subscribe(callback);
 
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "other-key" }),
-      );
+      window.dispatchEvent(new StorageEvent("storage", { key: "other-key" }));
 
       expect(callback).not.toHaveBeenCalled();
     });
@@ -130,9 +126,7 @@ describe("createLocalStorageAdapter", () => {
       const unsubscribe = adapter.subscribe(callback);
       unsubscribe();
 
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "theme" }),
-      );
+      window.dispatchEvent(new StorageEvent("storage", { key: "theme" }));
 
       expect(callback).not.toHaveBeenCalled();
     });
@@ -145,9 +139,7 @@ describe("createLocalStorageAdapter", () => {
       adapter.subscribe(cb1);
       adapter.subscribe(cb2);
 
-      window.dispatchEvent(
-        new StorageEvent("storage", { key: "theme" }),
-      );
+      window.dispatchEvent(new StorageEvent("storage", { key: "theme" }));
 
       expect(cb1).toHaveBeenCalledOnce();
       expect(cb2).toHaveBeenCalledOnce();

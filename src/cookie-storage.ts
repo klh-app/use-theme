@@ -16,7 +16,7 @@ export interface CookieStorageOptions {
 function getCookie(name: string): string | null {
   if (typeof document === "undefined") return null;
   const match = document.cookie.match(
-    new RegExp("(?:^|; )" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "=([^;]*)"),
+    new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`),
   );
   return match ? decodeURIComponent(match[1]) : null;
 }
@@ -30,9 +30,7 @@ function getCookie(name: string): string | null {
  *
  * Cross-tab sync uses BroadcastChannel where available.
  */
-export function createCookieStorageAdapter(
-  options: CookieStorageOptions = {},
-): ThemeStorage {
+export function createCookieStorageAdapter(options: CookieStorageOptions = {}): ThemeStorage {
   const {
     key = "theme",
     path = "/",

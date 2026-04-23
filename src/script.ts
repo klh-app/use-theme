@@ -1,10 +1,5 @@
 import { createElement, type ReactElement } from "react";
-import {
-  DEFAULT_ATTRIBUTE,
-  MEDIA_QUERY,
-  STORAGE_KEY,
-  SYSTEM_THEME,
-} from "./constants.js";
+import { DEFAULT_ATTRIBUTE, MEDIA_QUERY, STORAGE_KEY, SYSTEM_THEME } from "./constants.js";
 
 export interface ThemeScriptProps {
   storageKey?: string;
@@ -32,10 +27,10 @@ export function getThemeScript(props?: ThemeScriptProps): string {
   } = props ?? {};
 
   const attributes = Array.isArray(attribute) ? attribute : [attribute];
-  
+
   // Safe stringify to prevent XSS via premature script tag closure
-  const safeJsonStringify = (val: unknown) => JSON.stringify(val).replace(/</g, '\\u003c');
-  
+  const safeJsonStringify = (val: unknown) => JSON.stringify(val).replace(/</g, "\\u003c");
+
   const valueMap = value ? safeJsonStringify(value) : "undefined";
 
   // Build the inline script as a string
@@ -47,10 +42,7 @@ export function getThemeScript(props?: ThemeScriptProps): string {
  * script using dangerouslySetInnerHTML.
  */
 export function ThemeScript(props: ThemeScriptProps): ReactElement {
-  const {
-    nonce,
-    ...scriptProps
-  } = props;
+  const { nonce, ...scriptProps } = props;
 
   return createElement("script", {
     nonce,
