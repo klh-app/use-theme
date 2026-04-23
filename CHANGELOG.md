@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1](https://github.com/klh-app/use-theme/compare/v1.1.0...v1.1.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* bump engines.node to &gt;=20.19.0 to match Vite 8 requirement ([229cb22](https://github.com/klh-app/use-theme/commit/229cb22f29f7c11fc54bb1a14376c7da220c7f07))
+* **ci:** use Node 20 LTS to match engines field and add lint step ([98e64af](https://github.com/klh-app/use-theme/commit/98e64affdbadb69fd556dc64dae89a110fdeb84e))
+
 ## [1.1.0](https://github.com/klh-app/use-theme/compare/v1.0.3...v1.1.0) (2026-04-13)
 
 
