@@ -7,10 +7,11 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@klh-app/use-theme"><img src="https://img.shields.io/npm/v/@klh-app/use-theme?color=blue" alt="npm version" /></a>
   <a href="https://www.npmjs.com/package/@klh-app/use-theme"><img src="https://img.shields.io/npm/dm/@klh-app/use-theme" alt="npm downloads" /></a>
+  <a href="https://github.com/klh-app/use-theme/actions/workflows/ci.yml"><img src="https://github.com/klh-app/use-theme/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@klh-app/use-theme" alt="license" /></a>
 </p>
 
-Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime dependencies, framework-agnostic, works with Next.js, Vite, Remix, or any React 18+ setup.
+Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime dependencies, framework-agnostic, works with Next.js, Vite, Remix, or any React 18+ / 19+ setup.
 
 ## Features
 
@@ -22,8 +23,9 @@ Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime de
 - **Pluggable storage** — `ThemeStorage` interface for localStorage, cookies, or any sync backend
 - **Tailwind-ready** — `attribute="class"` just works with `darkMode: "class"`
 - **SSR safe** — all DOM/`window` access is guarded, `getServerSnapshot` provided
+- **React 18 & 19** — tested against both major versions in CI
 - **Zero runtime dependencies** — only `react >= 18` as peer dep
-- **~2 KB gzipped**
+- **< 2 KB** — 1.83 KB brotli-compressed, enforced by [size-limit](https://github.com/ai/size-limit) in CI
 
 ## Install
 
@@ -31,7 +33,7 @@ Dark mode for any React app. Built on `useSyncExternalStore` — zero runtime de
 pnpm add @klh-app/use-theme
 ```
 
-Peer dependencies: `react >= 18`, `react-dom >= 18`
+Peer dependencies: `react >= 18` (including React 19), `react-dom >= 18`
 
 ## Quick start
 
@@ -61,10 +63,10 @@ function ThemeToggle() {
 | | `@klh-app/use-theme` | `next-themes` |
 | --- | --- | --- |
 | **State primitive** | `useSyncExternalStore` — tear-free reads, no hydration mismatch | `useState` + `useEffect` — can flash wrong theme during concurrent renders |
-| **Framework** | Any React 18+ app (Vite, Remix, Astro, Next.js) | Next.js-first, others require workarounds |
+| **Framework** | Any React 18+ / 19+ app (Vite, Remix, Astro, Next.js) | Next.js-first, others require workarounds |
 | **Storage** | Pluggable `ThemeStorage` interface — swap localStorage for cookies, IndexedDB, or anything | Hardcoded to localStorage |
 | **Dependencies** | Zero runtime deps | Zero runtime deps |
-| **Bundle** | ~2.1 KB gzipped | ~2.5 KB gzipped |
+| **Bundle** | < 2 KB brotli | ~2.5 KB gzipped |
 
 If you're on Next.js and `next-themes` works for you, keep using it. This package exists for projects that need framework-agnostic design, pluggable storage, or correct concurrent rendering semantics.
 
