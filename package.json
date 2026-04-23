@@ -32,15 +32,23 @@
     "lint:fix": "biome check --write src/",
     "format": "biome format --write src/",
     "typecheck": "tsc --noEmit",
+    "size": "size-limit",
     "clean": "rm -rf dist",
     "prepublishOnly": "pnpm build"
   },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "2.5 kB"
+    }
+  ],
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
+    "@size-limit/preset-small-lib": "^12.1.0",
     "@testing-library/react": "^16.3.2",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
@@ -48,6 +56,7 @@
     "jsdom": "^25.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "size-limit": "^12.1.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "vite": "^8.0.7",
