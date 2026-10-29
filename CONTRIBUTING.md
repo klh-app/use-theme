@@ -4,8 +4,8 @@ Thanks for your interest in contributing! Here's how to get started.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) >= 20.12.0
-- [pnpm](https://pnpm.io/) 10.x (`corepack enable` to use the pinned version)
+- [Node.js](https://nodejs.org/) >= 20.19.0
+- [pnpm](https://pnpm.io/) 12.x (`corepack enable` to use the pinned version)
 
 ## Setup
 

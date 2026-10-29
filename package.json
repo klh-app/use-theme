@@ -47,20 +47,20 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.12",
+    "@biomejs/biome": "2.6.4",
     "@size-limit/preset-small-lib": "^12.1.0",
-    "@testing-library/react": "^16.3.2",
-    "@types/react": "^18.3.28",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
-    "@vitest/coverage-v8": "^4.1.3",
+    "@vitest/coverage-v8": "^4.1.12",
     "jsdom": "^25.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "size-limit": "^12.1.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
-    "vite": "^8.0.7",
-    "vitest": "^4.1.3"
+    "vite": "^8.3.5",
+    "vitest": "^4.1.12"
   },
   "keywords": [
     "react",
@@ -88,5 +88,5 @@
   "engines": {
     "node": ">=20.19.0"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@12.16.1"
 }
