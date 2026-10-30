@@ -6,6 +6,7 @@ import { useTheme } from "../use-theme.js";
 import { createMockLocalStorage, createMockMatchMedia, cleanupDOM } from "./helpers.js";
 
 function createWrapper(props: Record<string, unknown> = {}) {
+  // biome-ignore lint/correctness/noComponentHookFactories: Each test needs a wrapper with its own provider props.
   return function Wrapper({ children }: { children: ReactNode }) {
     return createElement(ThemeProvider, { ...props, children });
   };
